@@ -51,7 +51,10 @@ export default function App(){
   const [idx, setIdx] = React.useState(0)
   React.useEffect(()=>localStorage.setItem('tkf-wizard-min', JSON.stringify(data)),[data])
 
-  const upd = (e: any) => setData((d:any)=>({ ...d, [e.target.name]: e.target.value }))
+  const upd = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target
+    setData((d:any)=>({ ...d, [name]: type==='number' ? (value==='' ? undefined : +value) : value }))
+  }
   const next = () => setIdx(i=>Math.min(steps.length-1, i+1))
   const prev = () => setIdx(i=>Math.max(0, i-1))
 
